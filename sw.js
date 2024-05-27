@@ -16,25 +16,42 @@ const ASSETS = [
 // Installs the service worker. Feed it some initial URLs to cache
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      // B6. TODO - Add all of the URLs from RECIPE_URLs here so that they are
-      //            added to the cache when the ServiceWorker is installed
-      const RECIPE_URLS = [
-      'https://adarsh249.github.io/Lab8-Starter/recipes/1_50-thanksgiving-side-dishes.json',
-      'https://adarsh249.github.io/Lab8-Starter/recipes/2_roasting-turkey-breast-with-stuffing.json',
-      'https://adarsh249.github.io/Lab8-Starter/recipes/3_moms-cornbread-stuffing.json',
-      'https://adarsh249.github.io/Lab8-Starter/recipes/4_50-indulgent-thanksgiving-side-dishes-for-any-holiday-gathering.json',
-      'https://adarsh249.github.io/Lab8-Starter/recipes/5_healthy-thanksgiving-recipe-crockpot-turkey-breast.json',
-      'https://adarsh249.github.io/Lab8-Starter/recipes/6_one-pot-thanksgiving-dinner.json',
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      // B6. Add all of the URLs from RECIPE_URLs here so that they are
+      //     added to the cache when the ServiceWorker is installed
+      // CONSTANTS
+      const RECIPE_URLs = [
+        'https://adarsh249.github.io/Lab8-Starter/recipes/1_50-thanksgiving-side-dishes.json',
+        'https://adarsh249.github.io/Lab8-Starter/recipes/2_roasting-turkey-breast-with-stuffing.json',
+        'https://adarsh249.github.io/Lab8-Starter/recipes/3_moms-cornbread-stuffing.json',
+        'https://adarsh249.github.io/Lab8-Starter/recipes/4_50-indulgent-thanksgiving-side-dishes-for-any-holiday-gathering.json',
+        'https://adarsh249.github.io/Lab8-Starter/recipes/5_healthy-thanksgiving-recipe-crockpot-turkey-breast.json',
+        'https://adarsh249.github.io/Lab8-Starter/recipes/6_one-pot-thanksgiving-dinner.json',
       ];
-      self.addEventListener('install', function (event) {
-        event.waitUntil(
-          caches.open(CACHE_NAME).then(function (cache) {
-            // Add all of the URLs from RECIPE_URLs to the cache when the ServiceWorker is installed
-            return cache.addAll(RECIPE_URLS);
-          })
-        );
-      });
+      await cache.addAll(RECIPE_URLs);
+    })()
+  );
+});
+    // caches.open(CACHE_NAME).then(function (cache) {
+    //   // B6. TODO - Add all of the URLs from RECIPE_URLs here so that they are
+    //   //            added to the cache when the ServiceWorker is installed
+    //   const RECIPE_URLS = [
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/1_50-thanksgiving-side-dishes.json',
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/2_roasting-turkey-breast-with-stuffing.json',
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/3_moms-cornbread-stuffing.json',
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/4_50-indulgent-thanksgiving-side-dishes-for-any-holiday-gathering.json',
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/5_healthy-thanksgiving-recipe-crockpot-turkey-breast.json',
+    //   'https://adarsh249.github.io/Lab8-Starter/recipes/6_one-pot-thanksgiving-dinner.json',
+    //   ];
+    //   self.addEventListener('install', function (event) {
+    //     event.waitUntil(
+    //       caches.open(CACHE_NAME).then(function (cache) {
+    //         // Add all of the URLs from RECIPE_URLs to the cache when the ServiceWorker is installed
+    //         return cache.addAll(RECIPE_URLS);
+    //       })
+    //     );
+    //   });
 
 // Activates the service worker
 self.addEventListener('activate', function (event) {
@@ -71,5 +88,5 @@ self.addEventListener('fetch', function (event) {
         });
     }));
 });
-}));
-});
+// }));
+// });
