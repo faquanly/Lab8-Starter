@@ -73,20 +73,36 @@ self.addEventListener('fetch', function (event) {
   /*******************************/
   // B7. TODO - Respond to the event by opening the cache using the name we gave
   //            above (CACHE_NAME)
-  event.respondWith(caches.open(CACHE_NAME).then((cache) => {
-  // B8. TODO - If the request is in the cache, return with the cached version.
-  //            Otherwise fetch the resource, add it to the cache, and return
-  //            network response.
-    return cache.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
+
+  event.respondWith((async () => {
+      let cache_name = await caches.open(CACHE_NAME);
+      let response = await cache_name.match(event.request);
+      // B8. If the request is in the cache, return with the cached version.
+      //     Otherwise fetch the resource, add it to the cache, and return the network response.
+      if (response) {return response;
+      } else {
+        let networkResponse = await fetch(event.request);
+        await cache_name.put(event.request, networkResponse.clone());
+        return networkResponse;
       }
-      return fetch(event.request).then((fetchedResponse) => {
-        cache.put(event.request, fetchedResponse.clone());
-        return fetchedResponse;
-            });
-        });
-    }));
+    })()
+  );
 });
-// }));
+
+//   event.respondWith(caches.open(CACHE_NAME).then((cache) => {
+//   // B8. TODO - If the request is in the cache, return with the cached version.
+//   //            Otherwise fetch the resource, add it to the cache, and return
+//   //            network response.
+//     return cache.match(event.request).then((cachedResponse) => {
+//       if (cachedResponse) {
+//         return cachedResponse;
+//       }
+//       return fetch(event.request).then((fetchedResponse) => {
+//         cache.put(event.request, fetchedResponse.clone());
+//         return fetchedResponse;
+//             });
+//         });
+//     }));
 // });
+// // }));
+// // });
