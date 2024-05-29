@@ -30,11 +30,13 @@ self.addEventListener('install', function (event) {
         'https://adarsh249.github.io/Lab8-Starter/recipes/6_one-pot-thanksgiving-dinner.json',
       ];
 
-       self.addEventListener('install', function (event) {
-        event.waitUntil(
-          caches.open(CACHE_NAME).then(function (cache) {
-            // Add all of the URLs from RECIPE_URLs to the cache when the ServiceWorker is installed
-            return cache.addAll(RECIPE_URLs);
+      //  self.addEventListener('install', function (event) {
+      //   event.waitUntil(
+      //     // caches.open(CACHE_NAME).then(function (cache) {
+      //       cache.then(function (cache){
+      //       // Add all of the URLs from RECIPE_URLs to the cache when the ServiceWorker is installed
+      //       return cache.addAll(RECIPE_URLs);
+            await cache.addAll(RECIPE_URLs);
     })()
   );
 });
@@ -74,5 +76,5 @@ self.addEventListener('fetch', function (event) {
     })()
   );
 });
-}));
-});
+// }));
+// });
