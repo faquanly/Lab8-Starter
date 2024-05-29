@@ -2,15 +2,15 @@
 //         so do not move it next to the other scripts
 
 const CACHE_NAME = 'lab-8-starter';
-// Add any other assets to cache for offline mode
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/main.css',
-  '/main.js',
-  'RecipeCard.js'
-  // Add other assets like images, CSS files, JavaScript files, etc.
-];
+// // Add any other assets to cache for offline mode
+// const ASSETS = [
+//   '/',
+//   '/index.html',
+//   '/main.css',
+//   '/main.js',
+//   'RecipeCard.js'
+//   // Add other assets like images, CSS files, JavaScript files, etc.
+// ];
 
 
 // Installs the service worker. Feed it some initial URLs to cache
@@ -34,7 +34,7 @@ self.addEventListener('install', function (event) {
         event.waitUntil(
           caches.open(CACHE_NAME).then(function (cache) {
             // Add all of the URLs from RECIPE_URLs to the cache when the ServiceWorker is installed
-            return cache.addAll(RECIPE_URLS);
+            return cache.addAll(RECIPE_URLs);
     })()
   );
 });
